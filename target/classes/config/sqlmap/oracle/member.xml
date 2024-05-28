@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.MemberDAO">
+	<select id="login" parameterType="memberVO" resultType="memberVO">
+		select * from sts_member
+		 where id = #{id} and password = #{password}
+	</select>
+	
+	<select id="ckMember" parameterType="String" resultType="memberVO">
+		select * from sts_member
+		 where id = #{id}
+	</select>
+	
+	<insert id="insertMember" parameterType="memberVO">
+		insert into sts_member(id, password, name, phone)
+		 values(#{id}, #{password}, #{name}, #{phone})
+	</insert>
+	
+	<update id="updateMember" parameterType="memberVO">
+		update sts_member
+		 <set>
+		 	<if test="password != null">
+		 		password = #{password}
+		 	</if>
+		 	<if test="name != null">
+		 		, name = #{name}
+		 	</if>
+		 	<if test="phone != null">
+		 		, phone = #{phone}
+		 	</if>
+		 </set>
+		 where id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="memberVO">
+		delete from sts_member
+		 where id = #{id}
+	</delete>
+</mapper>
